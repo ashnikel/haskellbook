@@ -70,9 +70,35 @@ c2 = 3
 -- 1
 functionH :: [a] -> a
 functionH (x:_) = x
---2
+-- 2
 functionC :: Ord a => a -> a -> Bool
 functionC x y = if (x > y) then True else False
 -- 3
 functionS :: (a, b) -> b
 functionS (x, y) = y
+
+-- Given a type, write the function
+-- 1
+i :: a -> a
+i x = x
+-- 2
+c :: a -> b -> a
+c x _ = x
+-- 3
+c'' :: b -> a -> b
+c'' x _ = x
+-- 4
+c' :: a -> b -> b
+c' _ x = x
+-- 5
+r :: [a] -> [a]
+r (x:xs) = xs
+-- 6
+co :: (b -> c) -> (a -> b) -> a -> c
+co bToC aToB a = bToC (aToB a)
+-- 7
+a :: (a -> c) -> a -> a
+a _ x = x
+-- 8
+a' :: (a -> b) -> a -> b
+a' f x = f x
