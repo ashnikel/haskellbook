@@ -1,5 +1,6 @@
--- Multiple choice
+import Data.List (sort)
 
+-- Multiple choice
 -- 1 c
 -- 2 b
 -- 3 a
@@ -60,10 +61,59 @@ equalityForall :: Papu -> Papu -> Bool
 equalityForall p p' = p == p'
 
 -- 4 No - No instance for (Ord Papu)
-comparePapus :: Papu -> Papu -> Bool
-comparePapus p p' = p > p'
+-- comparePapus :: Papu -> Papu -> Bool
+-- comparePapus p p' = p > p'
 
 -- Match the types
 -- 1
 i :: Num a => a
 i = 1
+-- No, can't replace with i :: a - No instance for (Num a) arising from the literal ‘1’
+
+-- 2
+f :: Float
+f = 1.0
+-- No, can't replace with f :: Num a => a - Could not deduce (Fractional a) arising from the literal ‘1.0’
+
+-- 3
+-- Yes, can be replaced with f :: Fractional a => a
+
+-- 4
+-- Yes, can be replaced with f :: RealFrac a => a
+
+-- 5
+freud :: a -> a
+freud x = x
+-- Yes, can be replaced with freud :: Ord a => a -> a
+
+-- 6
+-- Yes, can be replaced with freud :: Int -> Int
+
+-- 7
+myX = 1 :: Int
+
+sigmund :: Int -> Int
+sigmund x = myX
+-- No, can't replace with sigmund :: a -> a - Couldn't match expected type ‘a’ with actual type ‘Int’
+
+-- 8
+-- No, can't replace with sigmund :: Num a => a -> a - Couldn't match expected type ‘a’ with actual
+--  type ‘Int’
+
+-- 9
+jung :: Ord a => [a] -> a
+jung xs = head (sort xs)
+-- Yes, can be replaced with jung :: [Int] -> Int
+
+-- 10
+young :: [Char] -> Char
+young xs = head (sort xs)
+-- Yes, can be replaced with young :: Ord a => a -> a
+
+-- 11
+mySort :: [Char] -> [Char]
+mySort = sort
+
+signifier :: [Char] -> Char
+signifier xs = head (mySort xs)
+-- No, can't replace with signifier :: Ord a => a -> a - Couldn't match type ‘a’ with ‘Char’
