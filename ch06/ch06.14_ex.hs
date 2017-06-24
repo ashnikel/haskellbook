@@ -117,3 +117,10 @@ mySort = sort
 signifier :: [Char] -> Char
 signifier xs = head (mySort xs)
 -- No, can't replace with signifier :: Ord a => a -> a - Couldn't match type ‘a’ with ‘Char’
+
+-- Type-Kwon-Do Two: Electric Typealoo
+chk :: Eq b => (a -> b) -> a -> b -> Bool
+chk f a b = f a == b
+
+arith :: Num b => (a -> b) -> Integer -> a -> b
+arith f i a = f a + fromInteger i
