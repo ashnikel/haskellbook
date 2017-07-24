@@ -63,3 +63,9 @@ dividedBy num denom = go num denom 0
            | abs n < abs d = Result (count, n)
            | signum d /= signum n = go (n + d) d (count - 1) -- ((+) div (-)) or ((-) div (+))
            | otherwise = go (n - d) d (count + 1) -- ((+) div (+)) or ((-) div (-))
+
+-- McCarthy 91 function
+mc91 :: (Ord a, Num a) => a -> a
+mc91 x
+   | x > 100 = x - 10
+   | otherwise = mc91 . mc91 $ x + 11
