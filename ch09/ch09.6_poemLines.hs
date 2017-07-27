@@ -7,10 +7,14 @@ fourthSen = "Could frame thy fearful symmetry?"
 sentences = firstSen ++ secondSen ++ thirdSen ++ fourthSen
 
 myLines :: String -> [String]
-myLines [] = []
-myLines ('\n' : xs) = myLines xs
-myLines xs = takeWhile (/= '\n') xs
-             : myLines (dropWhile(/= '\n') xs)
+myLines = splitOnChar '\n'
+
+splitOnChar :: Char -> String -> [String]
+splitOnChar _ [] = []
+splitOnChar c (x : xs)
+    | c == x = splitOnChar c xs
+    | otherwise = takeWhile (/= c) (x:xs)
+                  : splitOnChar c (dropWhile(/= c) (x:xs))
 
 shouldEqual =
     [ "Tyger Tyger, burning bright"
@@ -22,4 +26,4 @@ shouldEqual =
 main :: IO ()
 main =
     print $ "Are the equal? "
-            ++ show (myLines sentences == shouldEqual)
+            ++ show (splitOnChar '\n' sentences == shouldEqual)

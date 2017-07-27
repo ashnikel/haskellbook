@@ -1,5 +1,9 @@
 myWords :: String -> [String]
-myWords [] = []
-myWords (' ' : xs) = myWords xs
-myWords xs = takeWhile (/= ' ') xs
-             : myWords (dropWhile (/= ' ') xs)
+myWords = splitOnChar ' '
+
+splitOnChar :: Char -> String -> [String]
+splitOnChar _ [] = []
+splitOnChar c (x : xs)
+    | c == x = splitOnChar c xs
+    | otherwise = takeWhile (/= c) (x:xs)
+                  : splitOnChar c (dropWhile(/= c) (x:xs))
