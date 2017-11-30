@@ -23,11 +23,7 @@ shiftl origLetter passLetter
           z     = ord 'z'
 
 encode :: String -> String -> String
-encode message password = zipWith shiftr message loopPassword
-    where loopPassword = concat $ replicate rept password
-          rept = ceiling $ fromIntegral(length message) / fromIntegral(length password)
+encode message password = zipWith shiftr message (concat $ repeat password)
 
 decode :: String -> String -> String
-decode message password = zipWith shiftl message loopPassword
-  where loopPassword = concat $ replicate rept password
-        rept = ceiling $ fromIntegral(length message) / fromIntegral(length password)
+decode message password = zipWith shiftl message (concat $ repeat password)
