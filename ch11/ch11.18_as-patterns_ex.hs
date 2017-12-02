@@ -1,3 +1,5 @@
+import Data.Char (toUpper)
+
 -- 1
 isSubseqOf :: (Eq a) => [a] -> [a] -> Bool
 isSubseqOf [] _ = True
@@ -21,3 +23,10 @@ isSubseqOf [x] [y]
 -- False
 -- Prelude> isSubseqOf "blah" "blawhoot"
 -- True
+
+-- 2
+capitalizeWords :: String -> [(String, String)]
+capitalizeWords str = [(word, toUpper x : xs) | word@(x:xs) <- words str]
+
+-- Prelude> capitalizeWords "hello world"
+-- [("hello", "Hello"), ("world", "World")]
