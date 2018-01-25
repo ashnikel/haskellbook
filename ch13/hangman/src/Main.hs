@@ -37,6 +37,23 @@ radnomWord wl = do
 randomWord' :: IO String
 randomWord' = gameWords >>= radnomWord
 
+data Puzzle =
+    Puzzle String [Maybe Char] [Char]
+
+instance Show Puzzle where
+    show (Puzzle _ discovered guessed) =
+        (intersperse ' ' $
+         fmap renderPuzzleChar discovered)
+        ++ " Guessed so far: " ++ guessed
+
+freshPuzzle :: String -> Puzzle
+freshPuzzle w = Puzzle w (fmap (const Nothing) w) []
+
+charInWord :: Puzzle -> Char -> Bool
+charInWord (Puzzle word _ _) c = c `elem` word
+
+alreadyGuessed :: Puzzle -> Char -> Bool
+alreadyGuessed (Puzzle _ _ guessed) c = c `elem` guessed
 
 main :: IO ()
 main = do
