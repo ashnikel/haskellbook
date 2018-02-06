@@ -85,12 +85,16 @@ handleGuess puzzle guess = do
             return (fillInCharacter puzzle guess)
 
 gameOver :: Puzzle -> IO ()
-gameOver (Puzzle wordToGuess _ guessed) =
-    if (length guessed) > 7 then
+gameOver (Puzzle wordToGuess filledInSoFar guessed) =
+    if (length $ missed wordToGuess guessed) > 7 then
         do putStrLn "You lose!"
            putStrLn $ "The word was: " ++ wordToGuess
            exitSuccess
     else return ()
+
+missed :: Eq a => [a] -> [a] -> [a]
+missed wordToGuess guessed = 
+    foldr (\x acc -> if x `elem` wordToGuess then acc else x:acc) [] guessed
 
 gameWin :: Puzzle -> IO ()
 gameWin (Puzzle _ filledInSoFar _) =
